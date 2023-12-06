@@ -1,3 +1,5 @@
 config.yaml
 test_*
 **/__pycache__
+output
+*.ipynb

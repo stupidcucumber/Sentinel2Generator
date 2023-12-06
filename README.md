@@ -1,5 +1,17 @@
 # About
-This repository provides similar to the BatchProcessing API, which is available only for enterprise users on Sentinel Hub. I am not neither guranteeing the same speed nor the same quality, but it can be sufficient for small projects or to generate dataset to test your models on Satellite Keypoints Matching, Satellite Image Classification, Satellite Object Detection.
+This repository provides similar to the BatchProcessing API, which is available only for enterprise users on Sentinel Hub. 
+
+![Image of the satellite](./misc/satellite.jpg)
+
+I am not neither guranteeing the same speed nor the same quality, but it can be sufficient for small projects or to generate dataset to test your models on Satellite Keypoints Matching, Satellite Image Classification, Satellite Object Detection.
+
+# Implementation
+The implementation is quite straightforward. Images are being divided into "tiles", which are then being requested from the Sentinel-Hub. After all requests are processed service collects tile into one image to save it. In the end we have high-resolution data with specified resolution and size.
+
+## Classes
+- `ImageCell` class intended to represent "cell" in our image grid. Every object essentially contains requests and after processing request it will contain our tile.
+- `SatelliteImage` class contains all the tiles and provides high-level interface to download image, save whole image and save only tiles.
+- `Downloader` class intended to download provided SatelliteImage. Its purpose is to incapsulate download of images.
 
 # Example
 
@@ -10,4 +22,5 @@ python src/core/downloader.py -c "[[30.205536, 50.372620, 30.480881, 50.561498]]
 ```
 
 After that we have the following picture:
-![Example image](./example.png)
+
+![Example image](./misc/example.png)
