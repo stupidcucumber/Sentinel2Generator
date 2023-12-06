@@ -1,1 +1,3 @@
 config.yaml
+test_*
+**/__pycache__

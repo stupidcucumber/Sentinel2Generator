@@ -1,6 +1,6 @@
 import cv2, os
 from sentinelhub import BBox, CRS, bbox_to_dimensions
-from . import request
+import request
 
 
 class ImageCell:
@@ -22,7 +22,9 @@ class ImageCell:
         self.image = cv2.resize(self.image, dsize=self.size)
 
     def request_image(self):
-        image = self.request.get_data()[0]
+        request = self.request.get_data()
+        print('Request: ', request)
+        image = request[0]
         if self.postprocess:
             self._set_image(image)
         else:
@@ -58,11 +60,10 @@ class SatelliteImage:
         bbox = BBox(self.coords, crs=CRS.WGS84)
         size = bbox_to_dimensions(bbox, resolution=self.tile_resolution)
 
-        self.size = size
-        self.bbox = bbox
-
         columns_number = int(size[0] / self.tile_size[0])
         rows_number = int(size[1] / self.tile_size[1])
+        self.size = rows_number, columns_number
+        self.bbox = bbox
 
         long_step = long_size / columns_number
         lat_step = lat_size / rows_number
@@ -112,10 +113,10 @@ class SatelliteImage:
         '''
             Function concatenates all the tiles and saves them in the '.png' file with the given name.
         '''
-        image = cv2.hconcat(self.grid[0])
+        image = cv2.hconcat([cell.image for cell in self.grid[0]])
 
         for row in self.grid[1:]:
-            _temp = cv2.hconcat(row)
+            _temp = cv2.hconcat([cell.image for cell in row])
             image = cv2.vconcat([_temp, image])
 
         cv2.imwrite(name, image)
@@ -130,5 +131,7 @@ class SatelliteImage:
         for row_index, row in enumerate(self.grid):
             for column_index, cell in enumerate(row):
                 name = os.path.join(folder, '%d_%d.png' % (row_index, column_index))
-
-                cv2.imwrite(name, cell.image)
+                try:
+                    cv2.imwrite(name, cell.image)
+                except:
+                    print('Warning: Image (row=%d, column=%d) is missing!' % (row_index, column_index))
