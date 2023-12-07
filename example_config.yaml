@@ -1,0 +1,11 @@
+authorization:
+  instance_id: 
+  client_id: 
+  client_secret: 
+
+data:
+  workers: 4
+  radius: 10
+  tile-size: [2000, 2000]
+  tile-resolution: 2
+  dates: [[2023-05-10, 2023-05-15], [2023-02-10, 2023-02-15]] 
