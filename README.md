@@ -9,7 +9,25 @@ I am not neither guranteeing the same speed nor the same quality, but it can be 
 The implementation is quite straightforward. Images are being divided into "tiles", which are then being requested from the Sentinel-Hub. After all requests are processed service collects tile into one image to save it. In the end we have high-resolution data with specified resolution and size.
 
 ## Usage
+Before using this repository I reccomend initiating new environment via virtualenv, or using conda to do so. Then run the following command:
+```
+python -m pip install -r requirements.txt
+```
+After succesfull installation of all required packeges you can start setting up configuration file. In the root of this repository resides file named 'example_config.yaml' with two parts: 'authorization' and 'data'. 'authoriation' part is unique for each user and info to fill in can be found on your profile page on SentinelHub.
 
+More interesting part of the config file is 'data'. There you can adjust the following settings:
+- `workers` how many threads there will be to download images.
+- `radius` this application downloads images from Sentinel2. But it's not convenient to always find exact coordinates. Considering that I implemented special creation of this bbox coordinates from the center you mentioned (Long, Lat). Therefore application will return the square image with side radius * 2 and the center of image will align with center you wrote in 'coordinates.txt'.
+- `tile-size` size of the tile (Satellite Image is being divided into subimages), or the subimage.
+- `tile-resolution` resolution of the subimage.
+- `dates` from which time interval to take images.
+
+For the usage you need a special text file named "coordinates.txt". There on each line you need to put either 2-value coordinate or 4-value coordinate. If 2-value coordinate was mentioned, program will take care of extracting region of about 20-by-20 km region (this is defaul, but can be changed in the config.yaml file under 'data' settings).
+
+After creating 'coordinates.txt' you can start downloading images:
+```
+python generate.py --config example_config.yaml --coordinates coordinates.txt --output data
+```
 
 ## Classes
 Application has the folowing classes:
