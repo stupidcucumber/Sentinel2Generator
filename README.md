@@ -28,6 +28,17 @@ After creating 'coordinates.txt' you can start downloading images:
 ```
 python generate.py --config example_config.yaml --coordinates coordinates.txt --output data
 ```
+After application will end execution, you will see directory data at the root of this repository. There will reside folders with corresponding names of the square coordinates. In each such folder will be folders corresponding to the time-intervals of images from the corresponding square coordinates. Example:
+```
+data
+├── [50.35491697962805, 30.435564291321768, 50.56367102037195, 30.615385708678232]
+│   ├── [datetime.date(2023, 2, 10), datetime.date(2023, 2, 15)]
+│   └── [datetime.date(2023, 5, 10), datetime.date(2023, 5, 15)]
+└── [9.068993667787991, 55.88067983970848, 9.390786332212008, 56.06076016029154]
+    ├── [datetime.date(2023, 2, 10), datetime.date(2023, 2, 15)]
+    └── [datetime.date(2023, 5, 10), datetime.date(2023, 5, 15)]
+```
+Each leaf directory contains tiles with format ('x', '_', 'y', '.png') and the main image with name 'satellite_image.png'.
 
 ## Classes
 Application has the folowing classes:
