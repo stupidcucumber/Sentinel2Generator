@@ -4,3 +4,4 @@ test_*
 output
 *.ipynb
 *.png
+test

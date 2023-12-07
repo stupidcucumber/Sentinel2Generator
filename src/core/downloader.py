@@ -1,5 +1,5 @@
 from concurrent import futures
-import grid
+from . import grid
 import argparse
 from ast import literal_eval
 import yaml, os, datetime
@@ -30,7 +30,7 @@ def parse_arguments():
 
 
 class Downloader:
-    def __init__(self, max_workers: int = 4, save_tiles: bool=True, config= None):
+    def __init__(self, max_workers: int = 4, save_tiles: bool=True):
         self.workers = max_workers
         self.save_tiles = save_tiles
 
@@ -39,10 +39,14 @@ class Downloader:
             # Iterates over the batch of SatelliteImage objects
             with futures.ThreadPoolExecutor(max_workers=self.workers) as executor:
                 # Starts downloading images in parallel
+                future_results = []
                 for row_index in range(image.size[0]):
                     for column_index in range(image.size[1]):
                         # Downloads cell
-                        executor.submit(image.download_cell, row=row_index, column=column_index)
+                        future_result = executor.submit(image.download_cell, row=row_index, column=column_index)
+                        future_results.append(future_result)
+
+                futures.wait(future_results)
 
 
 if __name__ == '__main__':

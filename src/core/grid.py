@@ -1,6 +1,6 @@
 import cv2, os
 from sentinelhub import BBox, CRS, bbox_to_dimensions
-import request
+from . import request
 import numpy as np
 
 
