@@ -3,3 +3,4 @@ test_*
 **/__pycache__
 output
 *.ipynb
+*.png

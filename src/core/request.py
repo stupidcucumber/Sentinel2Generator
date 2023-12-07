@@ -1,4 +1,4 @@
-from sentinelhub import SHConfig, SentinelHubRequest, DataCollection, MimeType, BBox, CRS, bbox_to_dimensions
+from sentinelhub import SHConfig, SentinelHubRequest, DataCollection, MimeType
 
 
 def generate_request(bbox: tuple, size, timestamp: str, auth_config: SHConfig, **kwargs):

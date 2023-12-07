@@ -8,6 +8,7 @@ def parse_arguments():
 
     parser.add_argument('--config', type=str, default='config.yaml',
                         help='Specify your configuration file, that contains info about user and where to store all data.')
+    parser.add_argument('--')
     parser.add_argument('--output', type=str, default=datetime.datetime.now().strftime('%D_%s'),
                         help='Specify the folder where to store all data. If folder does not exist it will be created.')
     

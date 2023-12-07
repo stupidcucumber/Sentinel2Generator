@@ -1,6 +1,7 @@
 import cv2, os
 from sentinelhub import BBox, CRS, bbox_to_dimensions
 import request
+import numpy as np
 
 
 class ImageCell:
@@ -60,8 +61,8 @@ class SatelliteImage:
         bbox = BBox(self.coords, crs=CRS.WGS84)
         size = bbox_to_dimensions(bbox, resolution=self.tile_resolution)
 
-        columns_number = int(size[0] / self.tile_size[0])
-        rows_number = int(size[1] / self.tile_size[1])
+        columns_number = np.round(size[0] / self.tile_size[0]).astype(np.int32)
+        rows_number = np.round(size[1] / self.tile_size[1]).astype(np.int32)
         self.size = rows_number, columns_number
         self.bbox = bbox
 
